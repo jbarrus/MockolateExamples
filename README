@@ -1,0 +1,58 @@
+I apologize for not being a technical writer...
+
+A project demonstrating usage of mockolate and hamcrest libraries.
+
+Mockolate works by generating classes at execution time.  It uses
+as3-commons-bytecode and floxy libraries to do this.
+
+Mockolate provides mocking and stubbing abilities through:
+nice(), strict() and partial()
+
+nice() creates a mock object that will not complain if you call things on it that it doesn't expect
+strict() will complain if you call something on it that it doesn't expect
+partial() will behave as the class normally does unless you set an expectation (use is discouraged)
+
+By default, nice is used when [Mock] metadata is used but others can be used by:
+[Mock(type="partial")]
+
+nice or partial must be used with expect()
+
+The only time you want to use strict is if you are testing to see if something is NOT called/used
+
+Expectations can be made on the mocks with:
+expect()
+mock()
+stub()
+
+stub() is exactly the same as mock() except that you cannot verify() a stub
+
+Things to remember:
+-cannot mock static, protected or private
+-cannot mock anything in the default package
+-verify() is implied at the end of every [Test] method when mockolate [Rule] is added to test case class
+-if you use arg() with expect() all of the parameters in the expect() must use arg()
+	e.g. expect( test.test(1, 2, arg(anything()))) will not work
+	instead: expect( test.test(arg(1), arg(2), arg(anything())))
+-mockolate can slow down unit tests to some degree, but it is smart enough to only generate a class once, even if it is mocked in many test cases
+
+Mockolate documentation can be found at http://mockolate.org/.
+A few things on the site are out of date including
+-the record and replay method does not require you to call record() or replay()
+-expectArg() is deprecated in favor of arg() although both behave the same
+
+Flex unit:
+this is the lifecycle for a flexunit test case
+
+execute [BeforeClass]
+for every [Test]
+	instantiate an instance of the TestCase class
+	execute [Rule]s
+	execute [Before]
+	execute [Test]
+	execute [After]
+	execute [Rule]s (rule has control of this)
+execute [AfterClass]
+
+MockolateRule inserts all the [Mock] decorated properties at the beginning 
+and verify() at the end of every [Test]
+	
