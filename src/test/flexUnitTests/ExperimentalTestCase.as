@@ -9,7 +9,9 @@ package flexUnitTests
 	import flash.events.EventDispatcher;
 	
 	import mockolate.arg;
+	import mockolate.capture;
 	import mockolate.expect;
+	import mockolate.ingredients.Capture;
 	import mockolate.ingredients.Invocation;
 	import mockolate.mock;
 	import mockolate.received;
@@ -49,6 +51,21 @@ package flexUnitTests
 		{
 			fixtureToTest.engine = mockEngine;
 			fixtureToTest.dispatcher = mockDispatcher;
+		}
+		
+		[Test]
+		/**
+		 * Capture allows us to capture params on methods.
+		 */
+		public function testCapture():void
+		{
+			var capt:Capture = new Capture();
+			
+			expect( mockDispatcher.dispatchEvent( arg( capture( capt ))));
+			
+			mockDispatcher.dispatchEvent( new Event( "asdf" ));
+			
+			assertThat( capt.value.type, equalTo( "asdf" ));
 		}
 		
 		[Test]
