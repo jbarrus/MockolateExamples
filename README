@@ -14,6 +14,9 @@ partial() will behave as the class normally does unless you set an expectation (
 
 By default, nice is used when [Mock] metadata is used but others can be used by:
 [Mock(type="partial")]
+The [Mock] metadata is somewhat of a misnomer, because it is a nice, partial, or strict
+that is being created.  mock(something) is not the same as [Mock]something.
+[Mock]something is the same as nice(something).
 
 nice or partial must be used with expect()
 
@@ -34,6 +37,14 @@ Things to remember:
 	e.g. expect( test.test(1, 2, arg(anything()))) will not work
 	instead: expect( test.test(arg(1), arg(2), arg(anything())))
 -mockolate can slow down unit tests to some degree, but it is smart enough to only generate a class once, even if it is mocked in many test cases
+-autoverify only works on [Mock]s, not nice/strict/partial created in a test
+-autoverify can be turned of with [Test(verify="false")]
+-expect() cannot be used with a partial or strict, only a nice
+-times(x) will not cause verification to fail if the method/getter/setter is called more than
+	the expected number of times.  It will simply not match the expectation after the correct
+	number of times have been met.  If you are trying to verify that something ONLY happens
+	x number of times, you must use a strict or use the test spy method assertThat(obj, received().method("asdf").times(x))
+
 
 Mockolate documentation can be found at http://mockolate.org/.
 A few things on the site are out of date including
