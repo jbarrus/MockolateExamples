@@ -36,6 +36,19 @@ package flexUnitTests
 		}
 		
 		[Test]
+		public function testHasPropertiesToMatchObjects():void
+		{
+			/* compare objects using hasProperties
+			This is a more refactor-friendly version of the above example.
+			*/
+			
+			var event1:Event = new Event( "test", true, true );
+			var event2:Event = new Event( "test", true, true );
+			
+			assertThat( event1, hasProperties( event2 ));
+		}
+		
+		[Test]
 		public function testLogical():void
 		{
 			assertThat( "bob", anyOf( 
