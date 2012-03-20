@@ -125,7 +125,7 @@ package flexUnitTests
 		/////////////////////////////////////////////////////////
 		
 		[Test]
-		public function testExpectNiceNumbersOfTimesFail():void
+		public function testExpectNiceNumbersOfTimes():void
 		{
 			expect( mockDispatcher.dispatchEvent( arg( anything())))
 				.once();
