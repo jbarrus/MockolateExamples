@@ -124,12 +124,16 @@ package flexUnitTests
 		// SOME TESTS RELATED TO times(),once(),twice()...
 		/////////////////////////////////////////////////////////
 		
-		[Test]
-		public function testExpectNiceNumbersOfTimes():void
+		[Test(expects="mockolate.errors.ExpectationError")]
+		/**
+		 * Previously did not work, but does now.
+		 */
+		public function testExpectNiceNumbersOfTimesFail():void
 		{
 			expect( mockDispatcher.dispatchEvent( arg( anything())))
 				.once();
 			
+			fixtureToTest.testDispatch();
 			fixtureToTest.testDispatch();
 		}
 		
