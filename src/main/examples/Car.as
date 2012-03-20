@@ -17,6 +17,11 @@ package examples
 		
 		}
 		
+		public function talk(words:String):String
+		{
+			return "asdf";
+		}
+		
 		public function start():Boolean
 		{
 			engine.start();

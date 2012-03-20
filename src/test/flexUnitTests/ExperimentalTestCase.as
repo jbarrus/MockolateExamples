@@ -11,6 +11,7 @@ package flexUnitTests
 	import mockolate.arg;
 	import mockolate.capture;
 	import mockolate.expect;
+	import mockolate.expecting;
 	import mockolate.ingredients.Capture;
 	import mockolate.ingredients.Invocation;
 	import mockolate.mock;
@@ -40,6 +41,9 @@ package flexUnitTests
 		
 		[Mock]
 		public var mockEngine:Engine;
+		
+		[Mock]
+		public var mockCar:Car;
 		
 		[Mock]
 		public var mockDispatcher:EventDispatcher;
@@ -85,17 +89,35 @@ package flexUnitTests
 			fixtureToTest.testDispatch();
 		}
 		
-		[Test(order="1", expects="mockolate.errors.InvocationError")]
+//		commented out to prevent it messing up other tests
+//		[Test(order="1", expects="mockolate.errors.InvocationError")]
+//		/**
+//		 * Throws an error because expect() doesn't work with a strict.
+//		 * This has to be run last because of a bug in Mockolate where
+//		 * the expectation gets carried over.
+//		 * 
+//		 * This will also cause testcases run after this to fail in some instances.
+//		 */
+//		public function testExpectStrict():void
+//		{
+//			var strictDispatcher:EventDispatcher = strict( EventDispatcher );
+//			
+//			expect( strictDispatcher.dispatchEvent( arg( anything() )));
+//		}
+		
+		[Test]
 		/**
-		 * Throws an error because expect() doesn't work with a strict.
-		 * This has to be run last because of a but in Mockolate where
-		 * the expectation gets carried over.
+		 * Strict can be used with expect() if wrapped in expecting()
 		 */
-		public function testExpectStrict():void
+		public function testExpectStrictInExpecting():void
 		{
 			var strictDispatcher:EventDispatcher = strict( EventDispatcher );
+		
+			expecting( function():void {
+				expect( strictDispatcher.dispatchEvent( arg( anything() )));
+			});
 			
-			expect( strictDispatcher.dispatchEvent( arg( anything() )));
+			strictDispatcher.dispatchEvent( new Event( "nothing" ) );
 		}
 		
 		/////////////////////////////////////////////////////////

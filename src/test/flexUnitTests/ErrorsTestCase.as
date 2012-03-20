@@ -42,6 +42,15 @@ package flexUnitTests
 			mockEngine.start();
 		}
 		
+		[Test(expects="mockolate.errors.ExpectationError")]
+		public function testTimesZero():void
+		{
+			expect( mockEngine.start() )
+				.times( 0 );
+			
+			mockEngine.start();
+		}
+		
 		[Test(expects="mockolate.errors.InvocationError")]
 		public function testInvocationError():void
 		{
