@@ -103,18 +103,11 @@ package flexUnitTests
 		/////////////////////////////////////////////////////////
 		
 		[Test]
-		/**
-		 * Will not throw error.  expect(nice()).once() will cause the
-		 * expectation to be met and acted on once, but will not
-		 * cause the test to fail because it is called twice.
-		 */
 		public function testExpectNiceNumbersOfTimesFail():void
 		{
 			expect( mockDispatcher.dispatchEvent( arg( anything())))
 				.once();
-				
 			
-			fixtureToTest.testDispatch();
 			fixtureToTest.testDispatch();
 		}
 		
